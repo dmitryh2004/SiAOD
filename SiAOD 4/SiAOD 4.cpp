@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <locale.h>
+#include <conio.h>
 #include <chrono>
 #include <ctime>
 
@@ -85,6 +86,14 @@ int find(int* A, int size, int num)
 	return -1;
 }
 
+int find_with_barrier(int* A, int size, int num) //А - массив размера size+1
+{
+	int comps = 0;
+	A[0] = num;
+	for (int i = size; A[i] != num; i--, comps++) {}
+	return comps;
+}
+
 void check_massive(int size)
 {
 	//A * 32767 + B = size
@@ -130,15 +139,95 @@ void check_massive(int size)
 	cout << endl << "============================================" << endl << endl;
 }
 
+void check_massive_with_barrier(int size)
+{
+	//A * 32767 + B = size
+	int k1 = 0, k2 = 0, tempsize = size; //рассчитываем А и В для формулы выше
+	while (tempsize > 32767)
+	{
+		tempsize -= 32767;
+		k1++;
+	}
+	k2 = tempsize;
+	cout << "--- Поиск с барьером в массиве из " << size << " элементов ---" << endl;
+	//случайный массив
+	cout << "- Массив случайных чисел:" << endl;
+	int* A = new int[size];
+	int* B = new int[size + 1];
+	generate(A, size);
+	int index = k1 * (rand() % 32767) + (rand() % k2);
+	int number_to_find = A[index]; //выбираем случайное число
+	for (int i = 0; i < size; i++)
+		B[i + 1] = A[i];
+	auto start = chrono::steady_clock::now();
+	int random_comps = find_with_barrier(B, size, number_to_find);
+	auto end = chrono::steady_clock::now();
+	auto elapsed_mcs = chrono::duration_cast<chrono::nanoseconds>(end - start);
+	cout << "Время выполнения (нс): " << elapsed_mcs.count() << endl << "Сравнений: " << random_comps << endl;
+	//массив по возрастанию
+	sort(A, size);
+	for (int i = 0; i < size; i++)
+		B[i + 1] = A[i];
+	cout << "- Массив, отсортированный по возрастанию:" << endl;
+	start = chrono::steady_clock::now();
+	int increase_comps = find_with_barrier(B, size, number_to_find);
+	end = chrono::steady_clock::now();
+	elapsed_mcs = chrono::duration_cast<chrono::nanoseconds>(end - start);
+	cout << "Время выполнения (нс): " << elapsed_mcs.count() << endl << "Сравнений: " << increase_comps << endl;
+	//массив по убыванию
+	for (int i = 0; i < size / 2; i++)
+	{
+		swap(A[i], A[size - 1 - i]);
+	}
+	for (int i = 0; i < size; i++)
+		B[i + 1] = A[i];
+	cout << "- Массив, отсортированный по убыванию:" << endl;
+	start = chrono::steady_clock::now();
+	int decrease_comps = find_with_barrier(B, size, number_to_find);
+	end = chrono::steady_clock::now();
+	elapsed_mcs = chrono::duration_cast<chrono::nanoseconds>(end - start);
+	cout << "Время выполнения (нс): " << elapsed_mcs.count() << endl << "Сравнений: " << decrease_comps << endl;
+	//случай неудачного поиска
+	cout << "- Случай, когда элемент не найден:" << endl;
+	start = chrono::steady_clock::now();
+	int failure_comps = find_with_barrier(B, size, -100);
+	end = chrono::steady_clock::now();
+	elapsed_mcs = chrono::duration_cast<chrono::nanoseconds>(end - start);
+	cout << "Время выполнения (нс): " << elapsed_mcs.count() << endl << "Сравнений: " << failure_comps << endl;
+	delete[] A;
+	delete[] B;
+	cout << endl << "============================================" << endl << endl;
+}
+
 int main()
 {
 	setlocale(LC_ALL, "ru");
 	srand(time(NULL));
-	check_massive(100);
-	check_massive(1000);
-	check_massive(10000);
-	check_massive(100000);
-	check_massive(1000000);
+	
+	cout << "Выберите тип поиска: L - последовательный, B - с барьером" << endl;
+	char choice = _getch();
+	switch (choice)
+	{
+	case 'L':
+	case 'l':
+		check_massive(100);
+		check_massive(1000);
+		check_massive(10000);
+		check_massive(100000);
+		check_massive(1000000);
+		break;
+	case 'b':
+	case 'B':
+		check_massive_with_barrier(100);
+		check_massive_with_barrier(1000);
+		check_massive_with_barrier(10000);
+		check_massive_with_barrier(100000);
+		check_massive_with_barrier(1000000);
+		break;
+	default:
+		cout << "Неверный ввод" << endl;
+	}
+	
 }
 
 // Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
