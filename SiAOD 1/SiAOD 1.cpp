@@ -21,11 +21,11 @@ void sort(int* A, int size)
 
 	int minimal = 0;
 	int index = 0;
-	for (int i = 0; i < size; i++)
+	for (int i = 0; i < size; i++, comparisions++)
 	{
 		index = i;
 		minimal = A[i];
-		for (int j = i + 1; j < size; j++)
+		for (int j = i + 1; j < size; j++, comparisions++)
 		{
 			comparisions++;
 			if (A[j] < minimal)
@@ -61,7 +61,6 @@ int main()
 	check_massive(1000);
 	check_massive(10000);
 	check_massive(100000);
-	check_massive(1000000);
 }
 
 // Запуск программы: CTRL+F5 или меню "Отладка" > "Запуск без отладки"
