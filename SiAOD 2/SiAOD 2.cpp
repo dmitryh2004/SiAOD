@@ -21,7 +21,7 @@ void quicksort(int* A, int from, int to, int64_t& comps, int64_t& moves)
 		return;
 	int pivot = A[to];
 	int pivot_index = from;
-	for (int i = from; i < to; i++)
+	for (int i = from; i < to; i++, comps++)
 	{
 		comps++;
 		if (A[i] <= pivot)
