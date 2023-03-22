@@ -1,0 +1,136 @@
+class Node:
+    def __init__ (self, num, neighbors):
+        self.num = num
+        self.neighbors = neighbors
+
+    def clear(self, num):
+        temp = []
+        for i in self.neighbors:
+            if i != num:
+                temp.append(i)
+        self.neighbors = temp
+
+    def is_even(self):
+        if (len(self.neighbors) % 2 == 0): return True
+        else: return False
+
+    def sort_neighbors(self):
+        for i in range(0, len(self.neighbors)):
+            for j in range(0, len(self.neighbors)):
+                if (self.neighbors[i] < self.neighbors[j]):
+                    self.neighbors[i], self.neighbors[j] = self.neighbors[j], self.neighbors[i]
+
+    def show(self):
+        print ("Name of node = ", self.num, "\nNeighbors = ", self.neighbors)
+
+nodes = []
+
+def find(nd, num):
+    for node in nd:
+        if node.num == num:
+            return node
+    return None
+
+def input_():
+    i = int(input('Введите количество узлов: '))
+    roads = []
+    if i >= 1:
+        print('Вводите соединения между узлами (n1*n2, n1 и n2 - номера узлов. Вместо * может стоять - (двустороння дорога) или > (односторонняя дорога)). Чтобы закончить, введите 0-0:')
+        inp = ""
+        while (inp != "0-0"):
+            inp = input()
+            if (inp == "0-0"): break
+            split_ch = ''
+            if ('>' in inp): split_ch = '>'
+            elif ('-' in inp): split_ch = '-'
+            else:
+                print('Неверный ввод'); continue
+            splitted = inp.split(split_ch)
+            if len(splitted) != 2:
+                print ('Неверный ввод')
+                continue
+            else:
+                roads.append([int(splitted[0]), int(splitted[1]), split_ch])
+    
+    for j in range(1, i+1):
+        nodes.append(Node(j, []))
+
+    for road in roads:
+        splitted = road
+        if (splitted[2] == '-'):
+            nodes[splitted[0]-1].neighbors.append(splitted[1])
+            nodes[splitted[1]-1].neighbors.append(splitted[0])
+        else:
+            nodes[splitted[0]-1].neighbors.append(splitted[1])
+
+    for node in nodes:
+        node.sort_neighbors()
+
+def check_route(cur_n, start, end): #cur_n - узлы с текущими соединениями
+    if (len(cur_n) == 0): return True
+    uneven_count = 0
+    for node in cur_n:
+        node.show()
+        if node.is_even() == False:
+            uneven_count += 1
+    if (uneven_count > 2):
+        return False
+    n = nodes[start-1]
+    
+    for i in n.neighbors:
+        tn = n
+        t_start = i
+        ##############################
+       # t_n = []
+       # tn.clear(i)
+       # t_n.append(tn)
+       # for j in cur_n:
+       #     if j == n:
+       #         continue
+       #     if len(j.neighbors) == 0:
+       #         continue
+       #     t_n.append(j)
+       # for j in t_n:
+       #     if j.num == i:
+       #         j.clear(n.num)
+        ###############################
+        
+        
+
+        t_n = []
+        tn.clear(i)
+        t_n.append(tn)
+        ti = find(cur_n, i)
+        if ti:
+            ti.clear(n.num)
+            t_n.append(ti)
+        for j in cur_n:
+            if j.num == n.num or j.num == ti.num:
+                continue
+            t_n.append(j)
+        
+        print (n.num, '->', i, '?')
+        if (check_route(t_n, t_start, end)): return True
+        print ('no')   
+    return False
+
+def solve(cur_n):
+    uneven_count = 0
+    AB = [0, 0]
+    for node in cur_n:
+        if node.is_even() == False:
+            if uneven_count <= 1:
+                AB[uneven_count] = node.num
+            uneven_count += 1
+    if (uneven_count > 2):
+        return False
+    start = AB[0]
+    end = AB[1]
+    print(start, end)
+    return check_route(cur_n, start, end)
+ 
+input_()
+for node in nodes:
+        node.show()
+success = solve(nodes)
+print(success)
