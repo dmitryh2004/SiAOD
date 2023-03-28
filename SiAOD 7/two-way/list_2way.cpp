@@ -3,7 +3,7 @@
 
 void list_chain_2way::show()
 {
-	cout << "[ Íîìåð çà÷åòêè: " << this->number << " Ãðóïïà: " << this->group << " Îöåíêà: " << this->score << "]" << endl;
+	cout << "[ ÐÐ¾Ð¼ÐµÑ€ Ð·Ð°Ñ‡ÐµÑ‚ÐºÐ¸: " << this->number << " Ð“Ñ€ÑƒÐ¿Ð¿Ð°: " << this->group << " ÐžÑ†ÐµÐ½ÐºÐ°: " << this->score << "]" << endl;
 }
 
 list_2way::list_2way()
@@ -154,7 +154,7 @@ void list_2way::delete_element(int index)
 
 void list_2way::show()
 {
-	if (empty()) { cout << "Ñïèñîê ïóñò" << endl; return; }
+	if (empty()) { cout << "Ð¡Ð¿Ð¸ÑÐ¾Ðº Ð¿ÑƒÑÑ‚" << endl; return; }
 	list_chain_2way* temp = first;
 	cout << "[" << endl;
 	while (temp != nullptr)
@@ -162,12 +162,12 @@ void list_2way::show()
 		temp->show();
 		temp = temp->next;
 	}
-	cout << "] (äëèíà: " << length << ")" << endl;
+	cout << "] (Ð´Ð»Ð¸Ð½Ð°: " << length << ")" << endl;
 }
 
 void list_2way::show_reversed()
 {
-	if (empty()) { cout << "Ñïèñîê ïóñò" << endl; return; }
+	if (empty()) { cout << "Ð¡Ð¿Ð¸ÑÐ¾Ðº Ð¿ÑƒÑÑ‚" << endl; return; }
 	list_chain_2way* temp = last;
 	cout << "[" << endl;
 	while (temp != nullptr)
@@ -175,7 +175,7 @@ void list_2way::show_reversed()
 		temp->show();
 		temp = temp->prev;
 	}
-	cout << "] (äëèíà: " << length << ")" << endl;
+	cout << "] (Ð´Ð»Ð¸Ð½Ð°: " << length << ")" << endl;
 }
 
 bool list_2way::is_in(int number)
