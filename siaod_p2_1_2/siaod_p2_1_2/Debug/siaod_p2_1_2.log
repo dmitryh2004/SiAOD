@@ -1,0 +1,3 @@
+﻿  siaod_p2_1_2.cpp
+c:\users\дмитрий\source\repos\siaod_p2_1_2\siaod_p2_1_2\siaod_p2_1_2.cpp(74): warning C4244: аргумент: преобразование "time_t" в "unsigned int", возможна потеря данных
+  siaod_p2_1_2.vcxproj -> C:\Users\Дмитрий\source\repos\siaod_p2_1_2\Debug\siaod_p2_1_2.exe
