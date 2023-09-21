@@ -7,22 +7,32 @@ using namespace std;
 
 struct record {
 	int oms_code; //ключ
-	string surname; //фамилия
-	string name; //имя
-	string patronymic; //отчество
-	string disease_code; //код болезни
-	string date; //дата ДД.ММ.ГГ
+	char surname[20]; //фамилия
+	char name[20]; //имя
+	char patronymic[20]; //отчество
+	char disease_code[5]; //код болезни
+	char date[8]; //дата ДД.ММ.ГГ
 	int doctor_id; //ид врача
 
 	record()
 	{
-
+		oms_code = -1;
+		strcpy_s(this->surname, "generic");
+		strcpy_s(this->name, "generic");
+		strcpy_s(this->patronymic, "generic");
+		strcpy_s(this->disease_code, "XXXXX");
+		strcpy_s(this->date, "--.--.--");
+		doctor_id = -1;
 	}
 
-	record(int oms_code, string surname, string name, string patr, string disease_code, string date, int doctor_id) :
-		oms_code(oms_code), surname(surname), name(name), patronymic(patr), disease_code(disease_code), date(date), doctor_id(doctor_id)
+	record(int oms_code, char* surname, char* name, char* patr, char* disease_code, char* date, int doctor_id) :
+		oms_code(oms_code), doctor_id(doctor_id)
 	{
-
+		strcpy_s(this->surname, surname);
+		strcpy_s(this->name, name);
+		strcpy_s(this->patronymic, patronymic);
+		strcpy_s(this->disease_code, disease_code);
+		strcpy_s(this->date, date);
 	}
 
 	bool operator == (record right)
@@ -77,6 +87,7 @@ public:
 
 	void delete_last();
 	void delete_element(int index);
+	void clear();
 
 	void show();
 	void show_reversed();

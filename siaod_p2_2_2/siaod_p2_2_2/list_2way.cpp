@@ -19,6 +19,12 @@ list_2way::~list_2way()
 		delete_last();
 }
 
+void list_2way::clear()
+{
+	while (!empty())
+		delete_last();
+}
+
 list_chain_2way* list_2way::operator [] (int index)
 {
 	if (empty()) return nullptr;

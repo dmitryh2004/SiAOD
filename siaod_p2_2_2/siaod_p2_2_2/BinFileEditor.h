@@ -9,6 +9,10 @@
 using namespace std;
 
 namespace BinFileEditor {
+	bool openFile(string path);
+	bool reopenFile();
+	void closeFile();
+
 	bool deleteRecordByKey(int key); //удалить пациента, сохран€€ пор€док остальных записей
 	bool searchByDisease(string disease_code); //сформировать новый двоичный файл из людей с заболеванием
 	bool deleteRecord(int index); //удалить запись по индексу, последнюю запись переместить на место удаленной
@@ -16,9 +20,6 @@ namespace BinFileEditor {
 	bool showContent(); //содержимое
 	bool saveToText(); //создание текстового файла на основе текущих записей
 	bool saveToBin(); //создание двоичного файла на основе текущих записей
-
-	string readStringFromBin(fstream &file); //прочитать строку из двоичного файла
-	void writeStringToBin(fstream &file, string str); //записать строку в двоичный файл
 
 	void process(); //интерфейс дл€ взаимодействи€ с файлом, который запускаетс€ из основной программы
 
