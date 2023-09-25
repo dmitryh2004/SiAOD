@@ -12,11 +12,13 @@ namespace BinFileEditor {
 	bool openFile(string path);
 	bool reopenFile();
 	void closeFile();
+	void saveBin(); //служебное сохранение в двоичный файл
+	void saveText(); //служебное сохранение в текстовый файл
 
 	bool deleteRecordByKey(int key); //удалить пациента, сохраняя порядок остальных записей
 	bool searchByDisease(string disease_code); //сформировать новый двоичный файл из людей с заболеванием
-	bool deleteRecord(int index); //удалить запись по индексу, последнюю запись переместить на место удаленной
-	record readByIndex(int index); //прочитать запись по индексу
+	bool deleteRecord(int key); //удалить запись по индексу, последнюю запись переместить на место удаленной
+	bool readByIndex(int index, record &res); //прочитать запись по индексу
 	bool showContent(); //содержимое
 	bool saveToText(); //создание текстового файла на основе текущих записей
 	bool saveToBin(); //создание двоичного файла на основе текущих записей

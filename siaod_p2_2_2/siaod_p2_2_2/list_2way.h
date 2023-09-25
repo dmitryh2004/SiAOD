@@ -10,9 +10,9 @@ struct record {
 	char surname[20]; //фамилия
 	char name[20]; //имя
 	char patronymic[20]; //отчество
-	char disease_code[5]; //код болезни
-	char date[8]; //дата ДД.ММ.ГГ
-	int doctor_id; //ид врача
+	char disease_code[6]; //код болезни
+	char date[9]; //дата ДД.ММ.ГГ
+	int doctor_id; //код врача
 
 	record()
 	{
@@ -23,6 +23,17 @@ struct record {
 		strcpy_s(this->disease_code, "XXXXX");
 		strcpy_s(this->date, "--.--.--");
 		doctor_id = -1;
+	}
+
+	record(const record& copy)
+	{
+		this->oms_code = copy.oms_code;
+		strcpy_s(this->surname, copy.surname);
+		strcpy_s(this->name, copy.name);
+		strcpy_s(this->patronymic, copy.patronymic);
+		strcpy_s(this->disease_code, copy.disease_code);
+		strcpy_s(this->date, copy.date);
+		this->doctor_id = copy.doctor_id;
 	}
 
 	record(int oms_code, char* surname, char* name, char* patr, char* disease_code, char* date, int doctor_id) :
@@ -38,11 +49,11 @@ struct record {
 	bool operator == (record right)
 	{
 		if (this->oms_code != right.oms_code) return false;
-		if (this->surname != right.surname) return false;
-		if (this->name != right.name) return false;
-		if (this->patronymic != right.patronymic) return false;
-		if (this->disease_code != right.disease_code) return false;
-		if (this->date != right.date) return false;
+		if (strcmp(this->surname, right.surname)) return false;
+		if (strcmp(this->name, right.name)) return false;
+		if (strcmp(this->patronymic, right.patronymic)) return false;
+		if (strcmp(this->disease_code, right.disease_code)) return false;
+		if (strcmp(this->date, right.date)) return false;
 		if (this->doctor_id != right.doctor_id) return false;
 		return true;
 	}
@@ -78,23 +89,20 @@ public:
 
 	bool empty();
 
-	void append_to_begin(record new_record);
-
 	void append_to_end(record new_record);
-
-	void append_before(int index, record new_record);
-	void append_after(int index, record new_record);
 
 	void delete_last();
 	void delete_element(int index);
 	void clear();
 
 	void show();
-	void show_reversed();
 
 	bool is_in(record data);
 
+	int get_element_index(record data);
+
 	list_chain_2way* get_element(record data);
+	list_chain_2way* get_element_by_key(int key);
 	list_chain_2way* get_element_by_index(int index);
 
 	list_chain_2way* get_first();

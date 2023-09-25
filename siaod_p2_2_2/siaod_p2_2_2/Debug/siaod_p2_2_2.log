@@ -1,3 +1,7 @@
 ﻿  BinFileEditor.cpp
-c:\users\дмитрий\source\repos\siaod_p2_2_2\siaod_p2_2_2\binfileeditor.cpp(37): warning C4101: temp_i: неиспользованная локальная переменная
+c:\users\дмитрий\source\repos\siaod_p2_2_2\siaod_p2_2_2\binfileeditor.cpp(67): warning C4101: temp_i: неиспользованная локальная переменная
+c:\users\дмитрий\source\repos\siaod_p2_2_2\siaod_p2_2_2\binfileeditor.cpp(302): warning C4101: temp_i: неиспользованная локальная переменная
+  list_2way.cpp
+  siaod_p2_2_2.cpp
+  Создание кода...
   siaod_p2_2_2.vcxproj -> C:\Users\Дмитрий\source\repos\siaod_p2_2_2\Debug\siaod_p2_2_2.exe

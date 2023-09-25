@@ -43,23 +43,6 @@ bool list_2way::empty()
 	return (last == nullptr);
 }
 
-void list_2way::append_to_begin(record new_record)
-{
-	list_chain_2way* temp = new list_chain_2way;
-	temp->data = new_record;
-	length++;
-	if (empty())
-	{
-		first = temp;
-		last = temp;
-		return;
-	}
-	temp->next = first;
-	first->prev = temp;
-	first = temp;
-
-}
-
 void list_2way::append_to_end(record new_record)
 {
 	list_chain_2way* temp = new list_chain_2way;
@@ -75,38 +58,6 @@ void list_2way::append_to_end(record new_record)
 	last->next = temp;
 	last = temp;
 
-}
-
-void list_2way::append_before(int index, record new_record)
-{
-	if (empty()) return;
-	if (index == 0) append_to_begin(new_record);
-	else {
-		list_chain_2way* temp = this->get_element_by_index(index);
-		list_chain_2way* temp2 = new list_chain_2way;
-		temp2->data = new_record;
-		length++;
-		temp2->prev = temp->prev;
-		temp->prev->next = temp2;
-		temp2->next = temp;
-		temp->prev = temp2;
-	}
-}
-
-void list_2way::append_after(int index, record new_record)
-{
-	if (empty()) return;
-	if (index == length - 1) append_to_end(new_record);
-	else {
-		list_chain_2way* temp = this->get_element_by_index(index);
-		list_chain_2way* temp2 = new list_chain_2way;
-		temp2->data = new_record;
-		length++;
-		temp2->next = temp->next;
-		temp->next->prev = temp2;
-		temp2->prev = temp;
-		temp->next = temp2;
-	}
 }
 
 void list_2way::delete_last()
@@ -164,19 +115,6 @@ void list_2way::show()
 	cout << "] (длина: " << length << ")" << endl;
 }
 
-void list_2way::show_reversed()
-{
-	if (empty()) { cout << "Список пуст" << endl; return; }
-	list_chain_2way* temp = last;
-	cout << "[" << endl;
-	while (temp != nullptr)
-	{
-		temp->show();
-		temp = temp->prev;
-	}
-	cout << "] (длина: " << length << ")" << endl;
-}
-
 bool list_2way::is_in(record data)
 {
 	if (empty()) return false;
@@ -191,11 +129,41 @@ bool list_2way::is_in(record data)
 		return true;
 }
 
+int list_2way::get_element_index(record data)
+{
+	if (empty()) return -2;
+	list_chain_2way* temp = first;
+	int index = 0;
+	while ((temp != nullptr) && (temp->data != data))
+	{
+		temp = temp->next;
+		index++;
+	}
+	if (temp == nullptr)
+		return -1;
+	else
+		return index;
+}
+
 list_chain_2way* list_2way::get_element(record data)
 {
 	if (empty()) return nullptr;
 	list_chain_2way* temp = first;
 	while ((temp != nullptr) && (temp->data != data))
+	{
+		temp = temp->next;
+	}
+	if (temp == nullptr)
+		return nullptr;
+	else
+		return temp;
+}
+
+list_chain_2way* list_2way::get_element_by_key(int key)
+{
+	if (empty()) return nullptr;
+	list_chain_2way* temp = first;
+	while ((temp != nullptr) && (temp->data.oms_code != key))
 	{
 		temp = temp->next;
 	}
