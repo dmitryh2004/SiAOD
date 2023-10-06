@@ -1,0 +1,4 @@
+﻿  Hashtable.cpp
+c:\users\дмитрий\source\repos\siaod_p2_3\siaod_p2_3\hashtable.cpp(55): warning C4244: +=: преобразование "double" в "unsigned int", возможна потеря данных
+c:\users\дмитрий\source\repos\siaod_p2_3\siaod_p2_3\hashtable.cpp(251): warning C4018: <: несоответствие типов со знаком и без знака
+  siaod_p2_3.vcxproj -> C:\Users\Дмитрий\source\repos\siaod_p2_3\Debug\siaod_p2_3.exe
