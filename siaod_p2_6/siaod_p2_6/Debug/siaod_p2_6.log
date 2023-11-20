@@ -1,0 +1,10 @@
+﻿  Graph.cpp
+c:\users\дмитрий\source\repos\siaod_p2_6\siaod_p2_6\graph.cpp(17): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\дмитрий\source\repos\siaod_p2_6\siaod_p2_6\graph.cpp(37): warning C4018: >: несоответствие типов со знаком и без знака
+c:\users\дмитрий\source\repos\siaod_p2_6\siaod_p2_6\graph.cpp(153): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\дмитрий\source\repos\siaod_p2_6\siaod_p2_6\graph.cpp(160): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\дмитрий\source\repos\siaod_p2_6\siaod_p2_6\graph.cpp(175): warning C4018: <: несоответствие типов со знаком и без знака
+c:\users\дмитрий\source\repos\siaod_p2_6\siaod_p2_6\graph.cpp(204): warning C4018: <: несоответствие типов со знаком и без знака
+  siaod_p2_6.cpp
+  Создание кода...
+  siaod_p2_6.vcxproj -> C:\Users\Дмитрий\source\repos\siaod_p2_6\Debug\siaod_p2_6.exe
