@@ -2,6 +2,8 @@
 #include <string>
 #include <algorithm>
 #include <vector>
+#include <fstream>
+#include <queue>
 
 using namespace std;
 
@@ -81,6 +83,44 @@ public:
 		this->root->show("");
 	}
 
+	void convert_to_table(vector<char>& chars, vector<string>& codes)
+	{
+		vector<char> chs;
+		vector<string> cds;
+		queue<node*> queue1; //узлы
+		queue<string> queue2; //коды
+		queue1.push(root);
+		queue2.push("");
+		while (queue1.size() > 0)
+		{
+			//для очередного узла добавляем в очередь его потомков
+			node* cur = queue1.front();
+			string cur_path = queue2.front();
+			queue1.pop();
+			queue2.pop();
+			if (cur->getLeft())
+			{
+				queue1.push(cur->getLeft());
+				queue2.push(cur_path + "0");
+			}
+				
+			if (cur->getRight())
+			{
+				queue1.push(cur->getRight());
+				queue2.push(cur_path + "1");
+			}
+
+			//добавляем символ, если текущий узел - лист
+			if ((cur->getLeft() == nullptr) && (cur->getRight() == nullptr))
+			{
+				chs.push_back(cur->value[0]);
+				cds.push_back(cur_path);
+			}
+		}
+		chars = vector<char>(chs);
+		codes = vector<string>(cds);
+	}
+
 	void construct(string input) {
 		vector<node*> chs;
 		vector<int> cnts;
@@ -148,9 +188,47 @@ public:
 int main()
 {
 	setlocale(LC_ALL, "ru");
-	string input = "Прибавь к ослиной голове еще одну, получишь две. Но сколько б ни было ослов, они и двух не свяжут слов.";
+	fstream input_file("input.txt", ios::in);
+	string input = "";
+	while (!input_file.eof())
+	{
+		string temp = "";
+		getline(input_file, temp);
+		input += temp;
+	}
 	haffman_tree tree = haffman_tree();
 	tree.construct(input);
 	tree.show();
+	vector<char> chars;
+	vector<string> codes;
+	tree.convert_to_table(chars, codes);
+	string output = "";
+	for (int i = 0; i < input.size(); i++)
+	{
+		for (int j = 0; j < chars.size(); j++)
+		{
+			if (input[i] == chars[j])
+			{
+				output += codes[j];
+				break;
+			}
+		}
+	}
+	vector<unsigned char> output_chars;
+	for (int i = output.size() - 8; i >= 0; i -= 8) //упаковка 8 бит в 1-байтовое число
+	{
+		string temp = "";
+		for (int j = 0; j < 8; j++)
+		{
+			temp += output[i + j];
+		}
+		output_chars.push_back(unsigned char(strtol(temp.c_str(), nullptr, 2)));
+	}
+	fstream output_file("archived.txt", ios::out | ios::binary);
+	for (int i = output_chars.size() - 1; i >= 0; i--)
+	{
+		output_file.write((char*) &(output_chars[i]), sizeof(unsigned char));
+	}
+	output_file.close();
 	return 0;
 }
